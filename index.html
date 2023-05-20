@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image OCR</title>
+</head>
+<body>
+  <h1>Image OCR</h1>
+  <form action="process_image.py" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" accept="image/*">
+    <input type="submit" value="Submit">
+  </form>
+  <div id="result"></div>
+
+  <script>
+    // Update the URL of the Python script in the AJAX request below
+    const uploadUrl = "http://localhost:8000/web-photo-ocr.py";
+    const resultDiv = document.getElementById("result");
+
+    document.querySelector("form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      resultDiv.textContent = "Processing OCR...";
+      
+      const formData = new FormData();
+      const fileInput = document.querySelector("input[type='file']");
+      formData.append("image", fileInput.files[0]);
+
+      fetch(uploadUrl, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(result => {
+        resultDiv.textContent = result;
+      })
+      .catch(error => {
+        resultDiv.textContent = "Error: " + error;
+      });
+    });
+  </script>
+</body>
+</html>
