@@ -4,7 +4,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route("https://github.com/mahavirprasad/photo-ocr/blob/main/web-photo-ocr.py", methods=["POST"])
+@app.route("web-photo-ocr.py", methods=["POST"])
 def process_image():
     image_file = request.files["image"]
     image = Image.open(image_file)
